@@ -669,8 +669,8 @@ Moloch.sol has been scanned by twenty-one independent AI audit tools. Reports wi
 1. Vote receipt transferability breaks `cancelVote` (Pashov — Low, design tradeoff)
 2. Zero-winner futarchy pool lockup (Pashov — Low, funds remain in DAO treasury)
 3. Post-queue voting can flip timelocked proposals (Claude Opus 4.6/SECURITY.md — by design, timelock is a last-objection window)
-4. Public `fundFutarchy` + zero-quorum `state()` enables permanent proposal freeze via premature NO-resolution (ChatGPT GPT 5.4 — Medium, configuration-dependent, enforced by SafeSummoner)
-5. `fundFutarchy` accepts executed/cancelled proposal IDs, creating permanently stuck futarchy pools (ChatGPT Pro GPT-4.5 Pro — Medium, missing `executed[id]` check)
+4. Public `fundFutarchy` + zero-quorum `state()` enables permanent proposal freeze via premature NO-resolution (ChatGPT (GPT 5.4) — Medium, configuration-dependent, enforced by SafeSummoner)
+5. `fundFutarchy` accepts executed/cancelled proposal IDs, creating permanently stuck futarchy pools (ChatGPT Pro (GPT-4.5 Pro) — Medium, missing `executed[id]` check)
 
 **Tool ranking by signal quality:**
 - **ChatGPT (GPT 5.4)** produced the single highest-impact finding (KF#17, Medium) with the best signal-to-noise ratio (1 novel from 2 total findings, 50%). Its architecture assessment — identifying the boundary between live governance state and prediction-market settlement — is the clearest articulation of the futarchy design tension.
@@ -679,8 +679,8 @@ Moloch.sol has been scanned by twenty-one independent AI audit tools. Reports wi
 - **Claude (Opus 4.6)** identified a subtle design observation (post-queue voting) that no other tool found, plus the `spendPermit` missing `executed[id]` check (a sharper angle on KF#10, later catalogued as KF#16).
 - **Trail of Bits** and **Cyfrin** provided unique non-vulnerability value: maturity scoring (2.67/4.0) and standards compliance (21/32 compliant), respectively.
 - **Claudit** validated defenses against real-world exploits (Nouns, Olympus, PartyDAO) — unique cross-reference approach.
-- **Octane** produced the most raw findings (49) with 4 valid observations. While none were first-ever novel, Octane provided the most detailed early articulation of the auto-futarchy minted-reward farming vector (vuln #4) — later confirmed by Pashov, Forefy, QuillShield, and ChatGPT. High volume, low signal-to-noise, but valuable for exhaustive surface coverage.
-- **Gemini (Gemini 3)** and **DeepSeek (V3.2 Speciale)** used the same SECURITY.md prompt as ChatGPT but produced zero novel findings, demonstrating that prompt quality alone is insufficient — model capability is the dominant factor.
+- **Octane** produced the most raw findings (49) with 4 valid observations. While none were first-ever novel, Octane provided the most detailed early articulation of the auto-futarchy minted-reward farming vector (vuln #4) — later confirmed by Pashov, Forefy, QuillShield, ChatGPT, ChatGPT Pro, and Qwen. High volume with broad surface coverage — useful for exhaustive first-pass scanning.
+- **Gemini (Gemini 3)** and **DeepSeek (V3.2 Speciale)** used the same SECURITY.md prompt as ChatGPT (GPT 5.4) and ChatGPT Pro (GPT-4.5 Pro) but produced zero novel findings, demonstrating that prompt quality alone is insufficient — model capability is the dominant factor.
 - **Archethect** correctly falsified all 6 suspicious spots — a clean bill of health is also signal.
 - **ZeroSkills Slot Sleuth** ran a 5-phase EVM storage-safety analysis (lost writes, attacker-influenced slots, upgrade collisions, storage semantics). Clean pass — Moloch.sol avoids the vulnerability patterns this detector targets (no assembly `SSTORE`, no manual slot arithmetic, no upgradeable proxies). Useful for confirming architectural hygiene.
 - **Forefy**, **QuillShield**, **SCV Scan**, and **Auditmos** each independently confirmed subsets of the known findings, adding cross-validation confidence without novel discoveries. **EVM MCP Tools** was too basic for governance contracts (regex heuristics only).
